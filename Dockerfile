@@ -9,11 +9,14 @@ COPY requirements.txt .
 # Install the dependencies
 RUN pip install -r requirements.txt
 
+# Pre-download the model at build time
+RUN python -c "from transformers import AutoTokenizer, AutoModelForSequenceClassification; AutoTokenizer.from_pretrained('AmrMohamed21/arabert-fake-news'); AutoModelForSequenceClassification.from_pretrained('AmrMohamed21/arabert-fake-news')"
+
 # Copy the rest of the application code into the container
 COPY . .
 
 # Expose the port that the application will run on
-EXPOSE 8000 
+EXPOSE 8000
 
 # Command to run the application
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]

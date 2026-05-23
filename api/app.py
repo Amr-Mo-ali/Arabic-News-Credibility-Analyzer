@@ -7,7 +7,9 @@ from pydantic import BaseModel
 from src.predict import predict
 
 app = FastAPI()
-
+@app.get("/health")
+def health():
+    return {"status": "ok"}
 class TextItem(BaseModel):
     text: str
 
