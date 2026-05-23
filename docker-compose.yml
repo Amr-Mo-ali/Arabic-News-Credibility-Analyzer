@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8002:8000"
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONPATH=/app
+
+networks:
+  default:
+    driver: bridge 
+
+volumes:
+  app_data:
+  app_logs:
