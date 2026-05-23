@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🔍 Arabic News Credibility Analyzer
 
 <div align="center">
