@@ -1,13 +1,21 @@
 version: '3'
 services:
-  app:
+  api:
     build: .
     ports:
-      - "8002:8000"
-    volumes:
-      - .:/app
+      - "8000:8000"
     environment:
       - PYTHONPATH=/app
+
+  ui:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - PYTHONPATH=/app
+    command: streamlit run app_ui.py --server.port 8501 --server.address 0.0.0.0
+    depends_on:
+      - api
 
 networks:
   default:
