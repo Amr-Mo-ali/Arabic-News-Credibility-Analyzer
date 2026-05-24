@@ -16,7 +16,7 @@ RUN python -c "from transformers import AutoTokenizer, AutoModelForSequenceClass
 COPY . .
 
 # Expose the port that the application will run on
-EXPOSE 8000
+EXPOSE  7860
 
 # Command to run the application
 CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]

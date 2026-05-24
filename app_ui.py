@@ -26,7 +26,7 @@ def call_api(text, retries=5, delay=3):
     for i in range(retries):
         try:
             response = requests.post(
-                "http://api:8000/predict/",
+                "http://localhost:8000/predict/",
                 json={"text": text},
                 timeout=10
             )
