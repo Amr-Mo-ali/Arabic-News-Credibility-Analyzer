@@ -26,22 +26,28 @@ data = load_data('data/raw/arabic_fake_news_dataset.json')
 
 # now we apply explode() to the 'text' column to split the text into individual words
 
-fake_df = data[["fakes"]].explode("fakes")
-fake_df.columns = ["text"]
-fake_df["label"] = 0
+def data_explode(data):
+    """
+    Explode the 'fakes' and 'trues' columns in the DataFrame to create separate rows for each entry.
 
-# now we apply explode() to the 'true' column to split the text into individual words
-true_df = data[['trues']].explode("trues")
-true_df.columns = ["text"]
-true_df["label"] = 1
+    Parameters:
+    data (pd.DataFrame): The input DataFrame containing 'fakes' and 'trues' columns.
 
-# now we concatenate the two dataframes to create a single dataframe with both fake and true news
-final_df = pd.concat([fake_df, true_df], ignore_index=True)
+    Returns:
+    pd.DataFrame: A new DataFrame with exploded 'fakes' and 'trues' columns.
+    """
+    # Explode the 'fakes' column to create separate rows for each fake news entry
+    fake_df = data[["fakes"]].explode("fakes")
+    fake_df.columns = ["text"]  # Rename the column to 'text'
+    fake_df["label"] = 0  # Assign label 0 for fake news
+    # Explode the 'trues' column to create separate rows for each true news entry
+    true_df = data[['trues']].explode("trues")
+    true_df.columns = ["text"]  # Rename the column to 'text'   
+    true_df["label"] = 1  # Assign label 1 for true news
+    # Concatenate the fake and true DataFrames to create a single DataFrame
+    return pd.concat([fake_df, true_df], ignore_index=True)
 
-# print(final_df.shape)
-# print(final_df.head(10))
-# print(final_df['label'].value_counts())
-
+final_df = data_explode(data)
 # now we drop link rows from the text column
 final_df = final_df[~final_df['text'].str.contains('http')]
 
